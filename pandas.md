@@ -16,6 +16,7 @@ import pandas as pd
 ```
 
 - Creating data
+
 In->
 ```
 pd.DataFrame({'Yes': [50, 21], 'No': [131, 2]})
@@ -28,6 +29,7 @@ Out->
 ```
 
 - Index data
+
 In->
 ```
 pd.DataFrame({'Bob': ['I liked it', 'It was awful.'], 'Sue': ['Pretty good', 'Bland.']}, 
@@ -41,7 +43,9 @@ Product B	It was awful.
 ```
 
 - Series
+
 is a sequence of data values. If a DataFrame is a table, a Series is a list. And in fact you can create one with nothing more than a list:
+
 In->
 ```
 pd.Series([1, 2, 3, 4, 5])
@@ -57,6 +61,7 @@ dtype: int64
 ```
 
 - Index with Series
+
 In->
 ```
 pd.Series([30, 35, 40], index=['2015 Sales', '2016 Sales', '2017 Sales'], name='Product A')
@@ -70,6 +75,7 @@ Name: Product A, dtype: int64
 ```
 
 - Reading data files
+
 In->
 ```
 review = pd.read_csv("filename.csv")
@@ -92,6 +98,7 @@ review.head()
 ```
 
 - Naive accessors 
+
 Native Python objects provide good ways of indexing data. Pandas carries all of these over, which helps make it easy to start with.
 ```
 review.country
@@ -102,6 +109,7 @@ review['country'][0]
 - Indexing with pandas
 
 -> Index-based selection
+
 Pandas indexing works in one of two paradigms. The first is index-based selection: selecting data based on its numerical position in the data. `iloc` follows this paradigm.
 To select the first row of data in a DataFrame, we may use the following:
 ```
@@ -143,13 +151,14 @@ reviews.loc[:, ['taster_name', 'taster_twitter_handle', 'points']]
 ```
 
 - Choose between `loc` and `iloc`
+
 When choosing or transitioning between loc and iloc, there is one "gotcha" worth keeping in mind, which is that the two methods use slightly different indexing schemes.
 
-iloc uses the Python stdlib indexing scheme, where the first element of the range is included and the last one excluded. So 0:10 will select entries 0,...,9. loc, meanwhile, indexes inclusively. So 0:10 will select entries 0,...,10.
+`iloc` uses the Python stdlib indexing scheme, where the first element of the range is included and the last one excluded. So `0:10` will select entries `0,...,9`. `loc`, meanwhile, indexes inclusively. So `0:10` will select entries `0,...,10`.
 
-Why the change? Remember that loc can index any stdlib type: strings, for example. If we have a DataFrame with index values Apples, ..., Potatoes, ..., and we want to select "all the alphabetical fruit choices between Apples and Potatoes", then it's a lot more convenient to index df.loc['Apples':'Potatoes'] than it is to index something like df.loc['Apples', 'Potatoet] (t coming after s in the alphabet).
+Why the change? Remember that `loc` can index any `stdlib` type: `strings`, for example. If we have a DataFrame with index values Apples, ..., Potatoes, ..., and we want to select "all the alphabetical fruit choices between Apples and Potatoes", then it's a lot more convenient to index df.loc['Apples':'Potatoes'] than it is to index something like `df.loc['Apples', 'Potatoet]` (t coming after s in the alphabet).
 
-This is particularly confusing when the DataFrame index is a simple numerical list, e.g. 0,...,1000. In this case df.iloc[0:1000] will return 1000 entries, while df.loc[0:1000] return 1001 of them! To get 1000 elements using loc, you will need to go one lower and ask for df.loc[0:999].
+This is particularly confusing when the DataFrame index is a simple numerical list, `e.g. 0,...,1000`. In this case `df.iloc[0:1000]` will return 1000 entries, while `df.loc[0:1000]` return 1001 of them! To get 1000 elements using loc, you will need to go one lower and ask for `df.loc[0:999]`.
 
 Otherwise, the semantics of using loc are the same as those for iloc.
 
@@ -161,6 +170,7 @@ review.set_index("title")
 ```
 
 - Conditional selection
+
 In->
 ```
 review.country == 'Italy'
@@ -227,6 +237,7 @@ reviews.taster_name.value_counts()
 ```
 
 - Maps
+
 A map is a term, borrowed from mathematics, for a function that takes one set of values and "maps" them to another set of values. In data science we often have a need for creating new representations from existing data, or for transforming data from the format it is in now to the format that we want it to be in later. Maps are what handle this work, making them extremely important for getting your work done!
 
 map() is the first, and slightly simpler one. For example, suppose that we wanted to remean the scores the wines received to 0. We can do this as follows:
