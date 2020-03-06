@@ -1,8 +1,9 @@
 - Error 419 authentication 
 - Check port 443
 --------------------------------add CSRF token to header----------------------
-Add to boostrap.js file:
 
+Add to boostrap.js file:
+```
 window.Echo = new Echo({
   broadcaster: "pusher",
   key: pusher_app_key,
@@ -14,9 +15,11 @@ window.Echo = new Echo({
     },
   },
 })
+```
 
 For pusher directly same thing but different you need to do auth endpoint as well like this:
 
+```
 window.pusher = new Pusher(pusher_app_key, {
   cluster: pusher_cluster,
   forceTLS: pusher_encrypted,
@@ -27,10 +30,13 @@ window.pusher = new Pusher(pusher_app_key, {
     },
   },
 })
+```
+
 Therefor you can remove '/broadcasting/auth', from middleware.
 
 
 ------------fix with add to middle ware---------------
+
 You probably can fix it by adding in VerifyCsrfToken middleware:
 
     protected $except = [
@@ -38,6 +44,7 @@ You probably can fix it by adding in VerifyCsrfToken middleware:
     ];
 
 Also right above it I also have:
+
 protected $addHttpCookie = true;
 
 Ref: https://github.com/beyondcode/laravel-websockets/issues/258
